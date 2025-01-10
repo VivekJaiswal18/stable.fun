@@ -39,10 +39,12 @@ export default function MarketPage() {
       const labels = Array.from({length: 7}, (_, i) => `Day ${i + 1}`)
       const data = Array.from({length: 7}, () => Math.random() * 100 + 900)
       setChartData({
+        //@ts-ignore
         labels,
         datasets: [
           {
             label: 'StableBond Price',
+            //@ts-ignore
             data,
             borderColor: '#e6ff00',
             backgroundColor: 'rgba(230, 255, 0, 0.5)',
