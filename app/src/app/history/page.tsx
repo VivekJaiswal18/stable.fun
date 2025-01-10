@@ -1,3 +1,12 @@
+import React from 'react'
+
+function history() {
+  return (
+    <div>history</div>
+  )
+}
+
+export default history
 // use anchor_lang::prelude::*;
 // use anchor_spl::token::{self, Mint, Token, TokenAccount};
 // use switchboard_v2::AggregatorAccountData;
