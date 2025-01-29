@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Line } from 'react-chartjs-2'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/Card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/Card"
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)

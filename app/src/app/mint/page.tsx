@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { Loader2, Zap, Upload } from 'lucide-react'
-import { Button } from "../components/ui/Button"
-import { Input } from "../components/ui/Input"
-import { Label } from "../components/ui/Label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/Card"
+import { Button } from "../../components/ui/Button"
+import { Input } from "../../components/ui/Input"
+import { Label } from "../../components/ui/Label"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/Card"
 
 export default function MintPage() {
   const [isLoading, setIsLoading] = useState(false)
