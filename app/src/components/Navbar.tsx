@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import ConnectButton from './ConnectButton'
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -140,6 +141,7 @@ const Navbar = () => {
                     LAUNCH APP
                   </span>
                 </Link>
+                <ConnectButton/>
                 <WalletMultiButton style={{}} />
                 <button 
                   onClick={handleConnectWallet}
