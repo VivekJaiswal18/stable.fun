@@ -142,7 +142,7 @@ const Navbar = () => {
                   </span>
                 </Link>
                 <ConnectButton/>
-                <WalletMultiButton style={{}} />
+                {/* <WalletMultiButton style={{}} />
                 <button 
                   onClick={handleConnectWallet}
                   className="relative inline-flex overflow-hidden rounded px-4 sm:px-6 py-2 group hover:scale-105 transition-transform"
@@ -151,7 +151,7 @@ const Navbar = () => {
                   <span className="relative font-bold text-[#e6ff00] tracking-wide glitch-text-sm text-sm sm:text-base">
                     CONNECT
                   </span>
-                </button>
+                </button> */}
               </div>
             </nav>
 
