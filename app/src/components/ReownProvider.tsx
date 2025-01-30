@@ -17,7 +17,7 @@ export function ReownProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   if (!isReady) {
-    return <div>Initializing wallet...</div>
+    return <div></div>
   }
 
   return <>{children}</>
