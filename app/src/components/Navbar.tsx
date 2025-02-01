@@ -92,7 +92,7 @@ const Navbar = () => {
               href="/" 
               className="relative group"
             >
-              <span className="text-3xl sm:text-2xl jersey-10-regular font-bold text-white tracking-tighter hover:text-[#e6ff00] transition-colors">
+              <span className="text-4xl sm:text-2xl jersey-10-regular font-bold text-white tracking-tighter hover:text-[#e6ff00] transition-colors">
                 stable.fun
               </span>
               <span className="absolute -inset-x-2 -inset-y-1 border border-[#e6ff00]/0 group-hover:border-[#e6ff00]/50 rounded transition-all duration-300" />
