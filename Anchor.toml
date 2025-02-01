@@ -5,7 +5,7 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-stablefun = "NQSYwby8zdAvhJVgwoiE59bNEEwQyd3U3wzMC2SUV8a"
+stablefun = "3HhEASEoXMK8q3Xnch8fjyBdq9qp3JZnE8biEZcmKshj"
 
 [registry]
 url = "https://anchor.projectserum.com"

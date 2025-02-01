@@ -1,9 +1,60 @@
+// use anchor_lang::prelude::*;
+// use anchor_spl::token_2022::{self, Token2022, Mint, TokenAccount};
+// use anchor_spl::Token{Mint, TokenAccount};
+// // use anchor_spl::token_2022::{self, Token2022, Mint, TokenAccount};
+// use anchor_spl::token_2022::spl_token_2022::extension::interest_bearing_mint::InterestBearingConfig;
+// use switchboard_v2::AggregatorAccountData;
+// use solana_program::account_info::AccountInfo;
+
+// use anchor_lang::prelude::*;
+// use anchor_spl::{
+//     token_2022::{self, Token2022, Mint, TokenAccount},
+//     associated_token::AssociatedToken,
+// };
+// use std::str::FromStr;
+// use switchboard_v2::{AggregatorAccountData, SwitchboardDecimal};
+// use spl_token_2022::extension::interest_bearing_mint::InterestBearingConfig; last
+
+//[ use anchor_lang::prelude::*; 15
+// use anchor_spl::token_2022::{self, Token2022};
+// use anchor_spl::token::Mint; 
+// use anchor_spl::token::TokenAccount;
+// use switchboard_solana::{AggregatorAccountData, SwitchboardDecimal};
+// // use spl_token_2022::extension::interest_bearing_mint::InterestBearingConfig;
+// // use spl_token_2022::extension::StateWithExtensions;
+// // use spl_token_2022::{
+// //     extension::{ExtensionType, interest_bearing_mint::InterestBearingConfig, StateWithExtensions}
+// // }; recent
+// use spl_token_2022::{
+//     extension::{ExtensionType, interest_bearing_mint::InterestBearingConfig, StateWithExtensions}
+// }; //added
+use spl_token_2022::extension::BaseStateWithExtensions;
+// // use spl_token_2022::state::{Mint as Token2022Mint, StateWithExtensions};recent
+// use std::str::FromStr; //] 15
+
+// Anchor dependencies
 use anchor_lang::prelude::*;
-use anchor_spl::token_2022::{self, Mint, Token2022, TokenAccount};
-use anchor_spl::token_2022::spl_token_2022::extension::interest_bearing_mint::InterestBearingConfig;
-use switchboard_v2::AggregatorAccountData;
-use solana_program::account_info::AccountInfo;
-declare_id!("NQSYwby8zdAvhJVgwoiE59bNEEwQyd3U3wzMC2SUV8a");
+use anchor_spl::token_2022::{self, Token2022};
+use anchor_spl::token::Mint;
+use anchor_spl::token::TokenAccount;
+
+// Switchboard dependencies
+use switchboard_solana::{AggregatorAccountData, SwitchboardDecimal};
+
+// Standard library
+use std::str::FromStr;
+
+// spl-token-2022 dependencies
+use spl_token_2022::state::Mint as Token2022Mint;
+use spl_token_2022::{
+         extension::{ExtensionType, interest_bearing_mint::InterestBearingConfig, StateWithExtensions}
+     };
+// use spl_token_2022::extension::InterestBearingConfig;
+// use spl_token::state::{Extension, StateWithExtensions};
+
+
+
+declare_id!("3HhEASEoXMK8q3Xnch8fjyBdq9qp3JZnE8biEZcmKshj");
 const MAX_NAME_LENGTH: usize = 32;
 const MAX_SYMBOL_LENGTH: usize = 8;
 const MAX_ICON_URL_LENGTH: usize = 128;
@@ -34,10 +85,13 @@ require!(ctx.accounts.stablebond_mint.is_initialized, ErrorCode::InvalidStablebo
 let stablecoin = &mut ctx.accounts.stablecoin_data;
 stablecoin.creator = ctx.accounts.creator.key();
 stablecoin.stablebond_mint = ctx.accounts.stablebond_mint.key();
-stablecoin.name = name;
-stablecoin.symbol = symbol;
+// stablecoin.name = name; 31
+// stablecoin.symbol = symbol; 31
+stablecoin.name = name.clone(); //31
+stablecoin.symbol = symbol.clone(); //31
 stablecoin.icon_url = icon_url;
-stablecoin.target_currency = target_currency;
+// stablecoin.target_currency = target_currency; //31
+stablecoin.target_currency = target_currency.clone(); //31
 stablecoin.decimals = decimals;
 stablecoin.total_supply = 0;
 stablecoin.total_stablebonds = 0;
@@ -46,9 +100,12 @@ stablecoin.creation_time = Clock::get()?.unix_timestamp;
 emit!(StablecoinCreated {
 creator: ctx.accounts.creator.key(),
 mint: ctx.accounts.stablecoin_mint.key(),
-name: name.clone(),
-symbol: symbol.clone(),
-target_currency: target_currency.clone(),
+// name: name.clone(), 31
+// symbol: symbol.clone(),31
+// target_currency: target_currency.clone(),31
+name,
+symbol,
+target_currency,
 });
 Ok(())
 }
@@ -160,29 +217,66 @@ stablebond_amount,
 });
 Ok(())
 }
+// pub fn get_yield_info(ctx: Context<GetYieldInfo>, amount: u64) -> Result<YieldInfo> {
+// let mint_info = ctx.accounts.stablebond_mint.to_account_info();
+// let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
+// let rate = interest_config.rate as f64 / (u64::MAX as f64);
+// let compounds_per_year = 365.0_f64 * 24.0;
+// let apy = ((1.0_f64 + rate / compounds_per_year).powf(compounds_per_year) - 1.0) * 100.0;
+// let current_ts = Clock::get()?.unix_timestamp;
+// let initial_ts = interest_config.initialization_timestamp;
+// let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
+// let current_value = amount as f64 *
+// (1.0_f64 + rate).powf(time_elapsed / (365.0_f64 * 24.0 * 60.0 * 60.0));
+// let earned_yield = (current_value - amount as f64) as u64;
+// Ok(YieldInfo {
+// apy,
+// total_value: current_value as u64,
+// initial_deposit: amount,
+// earned_yield,
+// })
+// }  recent
+// pub fn get_yield_info(ctx: Context<GetYieldInfo>, amount: u64) -> Result<YieldInfo> { 31
+//     let mint_info = ctx.accounts.stablebond_mint.to_account_info();
+//     let (interest_config, rate) = get_interest_config_and_rate(&mint_info)?;
+//     let compounds_per_year = 365.0_f64 * 24.0;
+
+//     let apy = ((1.0_f64 + rate / compounds_per_year).powf(compounds_per_year) - 1.0) * 100.0;
+//     // let time_elapsed = get_time_elapsed(interest_config.initialization_timestamp)?; //recent
+//     let initialization_timestamp: i64 = interest_config.initialization_timestamp.into(); //added
+// let time_elapsed = get_time_elapsed(initialization_timestamp)?; //added
+//     let current_value = amount as f64 * (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+//     let earned_yield = (current_value - amount as f64) as u64;
+
+//     Ok(YieldInfo {
+//         apy,
+//         total_value: current_value as u64,
+//         initial_deposit: amount,
+//         earned_yield,
+//     })
+// } //added 31
 pub fn get_yield_info(ctx: Context<GetYieldInfo>, amount: u64) -> Result<YieldInfo> {
-let mint_info = ctx.accounts.stablebond_mint.to_account_info();
-let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
-let rate = interest_config.rate as f64 / (u64::MAX as f64);
-let compounds_per_year = 365.0 * 24.0;
-let apy = ((1.0 + rate / compounds_per_year).powf(compounds_per_year) - 1.0) * 100.0;
-let current_ts = Clock::get()?.unix_timestamp;
-let initial_ts = interest_config.initialization_timestamp;
-let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
-let current_value = amount as f64 *
-(1.0 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
-let earned_yield = (current_value - amount as f64) as u64;
-Ok(YieldInfo {
-apy,
-total_value: current_value as u64,
-initial_deposit: amount,
-earned_yield,
-})
+    let mint_info = ctx.accounts.stablebond_mint.to_account_info();
+    let (interest_config, rate) = get_interest_config_and_rate(&mint_info)?;
+    let compounds_per_year = 365.0_f64 * 24.0;
+
+    let apy = ((1.0_f64 + rate / compounds_per_year).powf(compounds_per_year) - 1.0) * 100.0;
+    let initialization_timestamp: i64 = interest_config.initialization_timestamp.into();
+    let time_elapsed = get_time_elapsed(initialization_timestamp)?;
+    let current_value = amount as f64 * (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+    let earned_yield = (current_value - amount as f64) as u64;
+
+    Ok(YieldInfo {
+        apy,
+        total_value: current_value as u64,
+        initial_deposit: amount,
+        earned_yield,
+    })
 }
 }
 #[derive(Accounts)]
 pub struct GetYieldInfo<'info> {
-pub stablebond_mint: Account<'info, token_2022::Mint>,
+pub stablebond_mint: Account<'info, Mint>,
 }
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
 pub struct YieldInfo {
@@ -218,7 +312,8 @@ pub rent: Sysvar<'info, Rent>,
 pub struct MintTokens<'info> {
 #[account(mut)]
 pub user: Signer<'info>,
-pub creator: AccountInfo<'info>,
+// pub creator: AccountInfo<'info>, recent
+pub creator: UncheckedAccount<'info>,
 #[account(mut)]
 pub stablecoin_data: Account<'info, StablecoinData>,
 #[account(mut)]
@@ -306,30 +401,125 @@ fn is_oracle_stale(oracle_data: &AggregatorAccountData) -> Result<bool> {
 let staleness = Clock::get()?.unix_timestamp - oracle_data.latest_confirmed_round.round_open_timestamp;
 Ok(staleness > MAX_ORACLE_STALENESS)
 }
+// fn get_token_current_value(mint_info: &AccountInfo, amount: u64) -> Result<u64> {
+// let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
+// let rate = interest_config.rate as f64 / (u64::MAX as f64);
+// let current_ts = Clock::get()?.unix_timestamp;
+// let initial_ts = interest_config.initialization_timestamp;
+// let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
+// let current_value = amount as f64 *
+// (1.0_f64 + rate).powf(time_elapsed / (365.0_f64 * 24.0 * 60.0 * 60.0));
+// Ok(current_value as u64)
+// } recent
+// fn get_token_current_value(mint_info: &AccountInfo, amount: u64) -> Result<u64> {    31
+//     let (interest_config, rate) = get_interest_config_and_rate(mint_info)?;
+//     // let time_elapsed = get_time_elapsed(interest_config.initialization_timestamp)?; recent
+//     let initialization_timestamp: i64 = interest_config.initialization_timestamp.into(); //added
+// let time_elapsed = get_time_elapsed(initialization_timestamp)?; //added
+//     let current_value = amount as f64 * (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+//     Ok(current_value as u64)
+// } //added 31
 fn get_token_current_value(mint_info: &AccountInfo, amount: u64) -> Result<u64> {
-let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
-let rate = interest_config.rate as f64 / (u64::MAX as f64);
-let current_ts = Clock::get()?.unix_timestamp;
-let initial_ts = interest_config.initialization_timestamp;
-let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
-let current_value = amount as f64 *
-(1.0 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
-Ok(current_value as u64)
+    let (interest_config, rate) = get_interest_config_and_rate(mint_info)?;
+    let initialization_timestamp: i64 = interest_config.initialization_timestamp.into();
+    let time_elapsed = get_time_elapsed(initialization_timestamp)?;
+    let current_value = amount as f64 * (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+    Ok(current_value as u64)
 }
+fn get_time_elapsed(initial_ts: i64) -> Result<f64> { //added
+    let current_ts = Clock::get()?.unix_timestamp;
+    let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
+    Ok(time_elapsed)
+}
+fn get_interest_config_and_rate(mint_info: &AccountInfo) -> Result<(InterestBearingConfig, f64)> { //added
+    // let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
+    // let state_with_extensions = StateWithExtensions::<Mint>::unpack(&mint_info.data.borrow())?; //recent
+    let data_ref = mint_info.data.borrow(); //31
+    // let state_with_extensions = StateWithExtensions::<Token2022Mint>::unpack(&mint_info.data.borrow())?;//adde 31
+    let state_with_extensions = StateWithExtensions::<Token2022Mint>::unpack(&data_ref)?;
+    let interest_config = state_with_extensions.get_extension::<InterestBearingConfig>()?;
+//below added 31
+    // let owned_config = InterestBearingConfig {
+    //     rate: interest_config.rate,
+    //     initialization_timestamp: interest_config.initialization_timestamp,
+    //     rate_authority: interest_config.rate_authority,
+    // };
+    // let rate = interest_config.rate as f64 / (u64::MAX as f64); last
+    // let rate = owned_config.rate as f64 / (u64::MAX as f64); //31
+    // let rate = interest_config.rate as f64 / (u64::MAX as f64);
+    // Ok((interest_config, rate)) last
+    let owned_config = InterestBearingConfig {
+        current_rate: interest_config.current_rate,
+        initialization_timestamp: interest_config.initialization_timestamp,
+        rate_authority: interest_config.rate_authority,
+        last_update_timestamp: interest_config.last_update_timestamp,
+        pre_update_average_rate: interest_config.pre_update_average_rate
+    };
+    
+    // Convert PodI16 to f64 using its value directly
+    let rate = i16::from(interest_config.current_rate) as f64 / (i16::MAX as f64);
+    Ok((owned_config, rate))
+}
+// fn get_interest_config_and_rate(mint_info: &AccountInfo) -> Result<(InterestBearingConfig, f64)> {
+//     let mint_data = mint_info.data.borrow();
+//     let state_with_extensions = StateWithExtensions::<Token2022Mint>::unpack(&mint_data)?;
+
+//     let mut current_offset = Token2022Mint::LEN;
+
+//     for extension_type in state_with_extensions.get_extension_types()? {
+//         if extension_type == ExtensionType::InterestBearingConfig {
+//             let interest_config_data = &mint_data[current_offset..current_offset + InterestBearingConfig::LEN];
+//             let interest_config = InterestBearingConfig::unpack(interest_config_data)?;
+
+//             let rate = interest_config.rate as f64 / (u64::MAX as f64);
+//             return Ok((interest_config, rate));
+//         }
+//         current_offset += extension_type.get_length().unwrap_or(0);
+//     }
+
+//     Err(ProgramError::InvalidAccountData) // InterestBearingConfig not found
+// }
+// fn calculate_stablebond_amount(
+// token_amount: u64,
+// exchange_rate: f64,
+// mint_info: &AccountInfo,
+// ) -> Result<u64> {
+// let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
+// let rate = interest_config.rate as f64 / (u64::MAX as f64);
+// let current_ts = Clock::get()?.unix_timestamp;
+// let initial_ts = interest_config.initialization_timestamp;
+// let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
+// let base_amount = token_amount as f64 / exchange_rate;
+// let stablebond_amount = base_amount /
+// (1.0_f64 + rate).powf(time_elapsed / (365.0_f64 * 24.0 * 60.0 * 60.0));
+// Ok(stablebond_amount as u64)
+// } recent
+// fn calculate_stablebond_amount( 31
+//     token_amount: u64,
+//     exchange_rate: f64,
+//     mint_info: &AccountInfo,
+// ) -> Result<u64> {
+//     let (interest_config, rate) = get_interest_config_and_rate(mint_info)?;
+//     // let time_elapsed = get_time_elapsed(interest_config.initialization_timestamp)?; recent
+//     let initialization_timestamp: i64 = interest_config.initialization_timestamp.into(); //added
+//     let time_elapsed = get_time_elapsed(initialization_timestamp)?;// added
+//     let base_amount = token_amount as f64 / exchange_rate;
+//     let stablebond_amount = base_amount
+//         / (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+//     Ok(stablebond_amount as u64)
+// } //added 31
 fn calculate_stablebond_amount(
-token_amount: u64,
-exchange_rate: f64,
-mint_info: &AccountInfo,
+    token_amount: u64,
+    exchange_rate: f64,
+    mint_info: &AccountInfo,
 ) -> Result<u64> {
-let interest_config = InterestBearingConfig::unpack_from_slice(&mint_info.data.borrow())?;
-let rate = interest_config.rate as f64 / (u64::MAX as f64);
-let current_ts = Clock::get()?.unix_timestamp;
-let initial_ts = interest_config.initialization_timestamp;
-let time_elapsed = current_ts.saturating_sub(initial_ts) as f64;
-let base_amount = token_amount as f64 / exchange_rate;
-let stablebond_amount = base_amount /
-(1.0 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
-Ok(stablebond_amount as u64)
+    let (interest_config, rate) = get_interest_config_and_rate(mint_info)?;
+    let initialization_timestamp: i64 = interest_config.initialization_timestamp.into();
+    let time_elapsed = get_time_elapsed(initialization_timestamp)?;
+    let base_amount = token_amount as f64 / exchange_rate;
+    let stablebond_amount = base_amount
+        / (1.0_f64 + rate).powf(time_elapsed / (365.0 * 24.0 * 60.0 * 60.0));
+    Ok(stablebond_amount as u64)
 }
 // Events
 #[event]
