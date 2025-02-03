@@ -60,7 +60,7 @@ export default function MarketPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-[#e6ff00] glitch-text">StableBond Market</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import ConnectButton from './ConnectButton'
+import { usePathname } from "next/navigation"
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
 
   const handleConnectWallet = () => {
     openAppKit()
@@ -129,8 +131,9 @@ const Navbar = () => {
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#e6ff00] transition-all duration-300 group-hover:w-full" />
               </Link>
               <div className="flex gap-4 ml-4">
+              {pathname === "/" && (
                 <Link
-                  href="/app"
+                  href="/mint"
                   className="relative inline-flex overflow-hidden rounded px-4 sm:px-6 py-2 group hover:scale-105 transition-transform"
                 >
                   <span className="absolute inset-0 bg-[#e6ff00]" />
@@ -141,6 +144,7 @@ const Navbar = () => {
                     LAUNCH APP
                   </span>
                 </Link>
+              )}
                 <ConnectButton/>
                 {/* <WalletMultiButton style={{}} />
                 <button 

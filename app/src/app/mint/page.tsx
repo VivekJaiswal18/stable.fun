@@ -27,10 +27,10 @@ export default function MintPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-[#e6ff00] glitch-text">Mint Your Token</h1>
-        <Card className="bg-gray-900 border-[#e6ff00]/20">
+        <Card className="bg-[#0c0c0c] border-[#e6ff00]/20">
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>

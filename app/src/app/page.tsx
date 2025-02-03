@@ -260,7 +260,7 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-12 sm:mb-20">
             <Link 
-              href="/app" 
+              href="/mint" 
               className="bg-[#e6ff00] hover:bg-[#ccff00] text-black px-8 py-3 font-bold text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(230,255,0,0.3)] text-center"
             >
               LAUNCH APP
