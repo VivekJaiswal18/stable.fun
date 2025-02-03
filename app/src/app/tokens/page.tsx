@@ -114,7 +114,7 @@ const TokenCard = ({ token }) => {
             <img
               src={token.image || "/placeholder.svg"}
               alt={token.name}
-              className="w-28 h-28 border rounded-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
+              className="w-28 h-28 border-[#6b8100] rounded-full object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
               onError={handleImageError}
             />
           ) : (
