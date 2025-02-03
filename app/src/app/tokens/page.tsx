@@ -98,7 +98,7 @@ const tokens = [
   { id: 7, name: "StellarShard", price: 0.0098, image: "https://cdn.iconscout.com/icon/free/png-512/free-coin-icon-download-in-svg-png-gif-file-formats--dollar-money-currncy-iconhub-pack-miscellaneous-icons-1093492.png?f=webp&w=256", color: "from-teal-500/10 to-green-500/10" },
   { id: 8, name: "VortexValue", price: 4.7654, image: "https://cdn.iconscout.com/icon/free/png-512/free-coin-icon-download-in-svg-png-gif-file-formats--dollar-money-currncy-iconhub-pack-miscellaneous-icons-1093492.png?f=webp&w=256", color: "from-orange-500/10 to-red-500/10" },
 ]
-
+//@ts-ignore
 const TokenCard = ({ token }) => {
   const [imageError, setImageError] = useState(false)
 
