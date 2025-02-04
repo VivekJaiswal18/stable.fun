@@ -251,7 +251,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h1 className="text-[#e6ff00] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight max-w-5xl mx-auto text-center mt-5 mb-6 sm:mb-12 glitch-text">
             {/* Integrating Traditional Finance with Blockchain Technology.  */}
-            Fun is in Pumping with stable
+            Fun is in Pumping with stable<span className="text-outline">.fun</span>
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-white/80 text-center max-w-3xl mx-auto mb-8 sm:mb-12">
             for a Transparent and Inclusive Financial Future.
@@ -273,7 +273,42 @@ export default function Home() {
             </Link>
             {/* <ConnectButton/> */}
           </div>
-
+            {/* Overview */}
+          <div className="bg-[#0c0c0c] backdrop-blur-md rounded-xl p-8 mb-20">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#e6ff00] mb-6 text-center">Quick Overview</h2>
+            <p className="text-white/90 text-lg sm:text-xl mb-6 text-center">
+              {/* stable.fun empowers anyone to create and launch their own memecoin against their deposited stablebond. */}
+              Now it's time to launch your own memecoins backed up by stablebonds
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-[#e6ff00] mb-3">Launch Your Memecoin</h3>
+                <p className="text-white/80">
+                  Create and deploy your own memecoin with just a few clicks. Customize your token's name, symbol, and
+                  initial supply.
+                </p>
+              </div>
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-[#e6ff00] mb-3">StableBond Backing</h3>
+                <p className="text-white/80">
+                  Deposit StableBonds as collateral to provide stability and trust to your memecoin project.
+                </p>
+              </div>
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-[#e6ff00] mb-3">Decentralized Trading</h3>
+                <p className="text-white/80">
+                  Trade your memecoins on our decentralized exchange, powered by advanced blockchain technology.
+                </p>
+              </div>
+              <div className="bg-black/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-[#e6ff00] mb-3">Community Governance</h3>
+                <p className="text-white/80">
+                  Participate in the governance of your memecoin project and shape its future through decentralized
+                  voting.
+                </p>
+              </div>
+            </div>
+          </div>
           {/* Pop Culture Image */}
           <PopCultureImage />
 

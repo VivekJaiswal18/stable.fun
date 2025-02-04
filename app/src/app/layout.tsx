@@ -91,6 +91,7 @@ import {
 import '@solana/wallet-adapter-react-ui/styles.css';
 import AppWalletProvider from '../components/AppWalletProvider';
 import { ReownProvider } from '@/components/ReownProvider';
+import Footer from '@/components/Footer';
 
 // import Footer from './components/Footer'
 
@@ -119,6 +120,7 @@ export default function RootLayout({
         <ReownProvider>
         <Navbar />
         <main>{children}</main>
+        <Footer/>
         </ReownProvider>
         {/* </AppWalletProvider> */}
         {/* <Footer /> */}

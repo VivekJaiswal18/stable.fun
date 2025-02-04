@@ -84,6 +84,11 @@ body {
   font-style: normal;
 }
 
+.text-outline {
+  -webkit-text-stroke: 2px #e6ff00;
+  color: transparent;
+}
+
 @keyframes glitch {
   0% {
     text-shadow: 
